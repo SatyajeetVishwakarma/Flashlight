@@ -1,0 +1,6 @@
+weer ~location(brooklyn) ~now(time)
+weer in ~location(new york) ~now(time)
+Hoe is het weer in ~location(queens) ~now(time)?
+voorspellingen voor ~location(the bronx) ~now(time)
+~location(london) weer ~now(time) 
+~location(istanbul) voorspellingen ~now(time) 

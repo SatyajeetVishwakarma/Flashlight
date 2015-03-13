@@ -9,6 +9,14 @@
 #import "PluginCellView.h"
 #import "PluginModel.h"
 #import "PluginListController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "ITSwitch+Additions.h"
+
+@interface PluginCellView ()
+
+@property (nonatomic) IBOutlet NSButton *settingsButton, *editButton;
+
+@end
 
 @implementation PluginCellView
 
@@ -18,16 +26,26 @@
 
 - (void)setObjectValue:(id)objectValue {
     [super setObjectValue:objectValue];
-    self.switchControl.on = [self plugin].installed;
-    [self.switchControl setEnabled:![self plugin].installing];
+    self.removeButton.enabled = ![self plugin].installing;
+    if ([[self plugin] installing]) {
+        [self.loader startAnimation:nil];
+    } else {
+        [self.loader stopAnimation:nil];
+    }
+    self.settingsButton.hidden = [self.plugin installing] || ![self.plugin hasOptions];
+    self.editButton.hidden = !self.plugin.isAutomatorWorkflow;
 }
 
-- (IBAction)toggleInstalled:(id)sender {
-    if ([self plugin].installed) {
-        [self.listController uninstallPlugin:[self plugin]];
-    } else {
-        [self.listController installPlugin:[self plugin]];
-    }
+- (IBAction)edit:(id)sender {
+    [self.listController editAutomatorPluginNamed:self.plugin.name];
+}
+
+- (IBAction)remove:(id)sender {
+    [self.listController uninstallPlugin:[self plugin]];
+}
+
+- (IBAction)openSettings:(id)sender {
+    [self.plugin presentOptionsInWindow:self.window];
 }
 
 @end

@@ -5,9 +5,9 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import "ITSwitch.h"
+#import <WebKit/WebKit.h>
 
-@class ESPluginListManager;
+@class PluginListController;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
@@ -15,10 +15,16 @@
 @property (nonatomic) NSString *loginItemPath;
 
 @property (assign) IBOutlet NSWindow *window;
-@property (nonatomic) IBOutlet ITSwitch *useSIMBLSwitch;
-@property (nonatomic) IBOutlet NSTableView *tableView;
+@property (nonatomic) IBOutlet NSButton *useSIMBLSwitch;
 - (IBAction)toggleUseSIMBL:(id)sender;
 
 @property (nonatomic) BOOL SIMBLOn;
+
+@property (nonatomic,weak) IBOutlet PluginListController *pluginListController;
+
+- (IBAction)openURLFromButton:(NSButton *)sender;
+
+- (IBAction)openGithub:(id)sender;
+- (IBAction)leaveFeedback:(id)sender;
 
 @end
